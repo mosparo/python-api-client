@@ -1,0 +1,2 @@
+class MosparoException(Exception):
+    pass
