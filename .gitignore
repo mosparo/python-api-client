@@ -1,2 +1,10 @@
-/.idea
-/mosparo.egg-info/
+__pycache__/
+
+env/
+build/
+develop-eggs/
+dist/
+*.egg-info/
+venv/
+
+.idea/*
