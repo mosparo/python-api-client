@@ -3,29 +3,29 @@ import pytest
 import requests
 from mosparo import Client, RequestHelper, VerificationResult, StatisticResult, MosparoException
 
-def test_validate_submission_without_tokens():
+def test_verify_submission_without_tokens():
     api_client = Client('http://test.local', 'testPublicKey', 'testPrivateKey')
 
     with pytest.raises(MosparoException) as exc:
-        result = api_client.validate_submission({'name': 'John Example'})
+        result = api_client.verify_submission({'name': 'John Example'})
 
     assert 'Submit or validation token not available.' in str(exc.value)
 
-def test_validate_submission_without_validation_tokens():
+def test_verify_submission_without_validation_tokens():
     api_client = Client('http://test.local', 'testPublicKey', 'testPrivateKey')
 
     with pytest.raises(MosparoException) as exc:
-        result = api_client.validate_submission({'name': 'John Example', '_mosparo_submitToken': 'submitToken'})
+        result = api_client.verify_submission({'name': 'John Example', '_mosparo_submitToken': 'submitToken'})
 
     assert 'Submit or validation token not available.' in str(exc.value)
 
-def test_validate_submission_form_tokens_empty_response(requests_mock):
+def test_verify_submission_form_tokens_empty_response(requests_mock):
     requests_mock.post('http://test.local/api/v1/verification/verify', text='')
 
     api_client = Client('http://test.local', 'testPublicKey', 'testPrivateKey')
 
     with pytest.raises(MosparoException) as exc:
-        result = api_client.validate_submission({
+        result = api_client.verify_submission({
             'name': 'John Example',
             '_mosparo_submitToken': 'submitToken',
             '_mosparo_validationToken': 'validationToken'
@@ -33,31 +33,31 @@ def test_validate_submission_form_tokens_empty_response(requests_mock):
 
     assert 'Response from API invalid.' in str(exc.value)
 
-def test_validate_submission_tokens_as_argument_empty_response(requests_mock):
+def test_verify_submission_tokens_as_argument_empty_response(requests_mock):
     requests_mock.post('http://test.local/api/v1/verification/verify', text='')
 
     api_client = Client('http://test.local', 'testPublicKey', 'testPrivateKey')
 
     with pytest.raises(MosparoException) as exc:
-        result = api_client.validate_submission({
+        result = api_client.verify_submission({
             'name': 'John Example'
         }, 'submitToken', 'validationToken')
 
     assert 'Response from API invalid.' in str(exc.value)
 
-def test_validate_submission_connection_error(requests_mock):
+def test_verify_submission_connection_error(requests_mock):
     requests_mock.post('http://test.local/api/v1/verification/verify', exc='Connection failed')
 
     api_client = Client('http://test.local', 'testPublicKey', 'testPrivateKey')
 
     with pytest.raises(MosparoException) as exc:
-        result = api_client.validate_submission({
+        result = api_client.verify_submission({
             'name': 'John Example'
         }, 'submitToken', 'validationToken')
 
     assert 'An error occurred while sending the request to mosparo.' in str(exc.value)
 
-def test_validate_submission_is_valid(requests_mock):
+def test_verify_submission_is_valid(requests_mock):
     public_key = 'testPublicKey'
     private_key = 'testPrivateKey'
     submit_token = 'submitToken'
@@ -81,7 +81,7 @@ def test_validate_submission_is_valid(requests_mock):
 
     api_client = Client('http://test.local', public_key, private_key)
 
-    result = api_client.validate_submission(form_data, submit_token, validation_token)
+    result = api_client.verify_submission(form_data, submit_token, validation_token)
 
     assert type(result) == VerificationResult
     assert requests_mock.call_count == 1
@@ -97,7 +97,7 @@ def test_validate_submission_is_valid(requests_mock):
     assert request_data['validationSignature'] == validation_signature
     assert request_data['formSignature'] == form_signature
 
-def test_validate_submission_is_not_valid(requests_mock):
+def test_verify_submission_is_not_valid(requests_mock):
     public_key = 'testPublicKey'
     private_key = 'testPrivateKey'
     submit_token = 'submitToken'
@@ -118,7 +118,7 @@ def test_validate_submission_is_not_valid(requests_mock):
 
     api_client = Client('http://test.local', public_key, private_key)
 
-    result = api_client.validate_submission(form_data, submit_token, validation_token)
+    result = api_client.verify_submission(form_data, submit_token, validation_token)
 
     assert type(result) == VerificationResult
     assert requests_mock.call_count == 1

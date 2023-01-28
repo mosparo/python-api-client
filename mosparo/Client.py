@@ -7,21 +7,38 @@ from .StatisticResult import StatisticResult
 from .MosparoException import MosparoException
 
 class Client:
+    """
+    The client is needed to communicate with the mosparo installation.
+
+    :param str host: The host of the mosparo installation
+    :param str public_key: The public key of the mosparo project
+    :param str private_key: The private key of the mosparo project
+    :param bool verify_ssl: Set to False, if the SSL certificate should not be verified.
+    """
+
     host: str = ''
     public_key: str = ''
     private_key: str = ''
-    clientArguments: dict = {}
+    verify_ssl: bool = True
 
-    def __init__(self, host: str, public_key: str, private_key: str, client_arguments=None):
+    def __init__(self, host: str, public_key: str, private_key: str, verify_ssl=True):
         self.host = host
         self.public_key = public_key
         self.private_key = private_key
+        self.verify_ssl = verify_ssl
 
-        if client_arguments is not None:
-            self.client_arguments = client_arguments
+    def verify_submission(self, form_data: dict, submit_token: str = None,
+                          validation_token: str = None) -> VerificationResult:
+        """
+        Verifies the given form data with mosparo.
 
-    def validate_submission(self, form_data: dict, submit_token: str = None,
-                            validation_token: str = None) -> VerificationResult:
+        :param dict form_data: The dictionary with all the form data.
+        :param str submit_token: The submit token which was submitted with the form
+        :param str validation_token: The validation token which was submitted with the form
+        :return: A VerificationResult object
+        :rtype: VerificationResult
+        :raises MosparoException: if an error occurred
+        """
         request_helper = RequestHelper(self.public_key, self.private_key)
 
         if submit_token is None and '_mosparo_submitToken' in form_data:
@@ -86,6 +103,14 @@ class Client:
         )
 
     def get_statistic_by_date(self, range: int = 0) -> StatisticResult:
+        """
+        Returns the statistic data, grouped by date.
+
+        :param int range: The time range in seconds for which the data should be returned (in example: 3600)
+        :return: A StatisticResult object
+        :rtype: StatisticResult
+        :raises MosparoException: if an error occurred or was returned from mosparo
+        """
         request_helper = RequestHelper(self.public_key, self.private_key)
 
         api_endpoint = '/api/v1/statistic/by-date'
@@ -119,12 +144,31 @@ class Client:
         )
 
     def _send_request(self, method: str, uri: str, data: dict) -> dict:
+        """
+        Sends the request to mosparo and parses the response.
+
+        :param str method: The method which is used (GET or POST)
+        :param str uri: The URI of the API endpoint
+        :param dict data: The data which needs to be sent to the API
+        :return: The data which the API returned
+        :rtype: dict
+        :raises MosparoException: if an error occurred while sending the request to mosparo
+        :raises MosparoException: if the response from mosparo is empty
+        """
         req = None
         try:
             if method == 'GET':
-                req = requests.get(self.host + uri, params=data['data'], auth=data['auth'], headers=data['headers'])
+                req = requests.get(self.host + uri,
+                                   params=data['data'],
+                                   auth=data['auth'],
+                                   headers=data['headers'],
+                                   verify=self.verify_ssl)
             elif method == 'POST':
-                req = requests.post(self.host + uri, data=json.dumps(data['data']), auth=data['auth'], headers=data['headers'])
+                req = requests.post(self.host + uri,
+                                    data=json.dumps(data['data']),
+                                    auth=data['auth'],
+                                    headers=data['headers'],
+                                    verify=self.verify_ssl)
         except Exception as exc:
             raise MosparoException('An error occurred while sending the request to mosparo.') from exc
 
