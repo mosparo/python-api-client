@@ -128,11 +128,11 @@ form data are valid.
 Returns `True` if mosparo determined the form as valid. The difference to `is_submittable()` is, that this
 is the original result from mosparo, while `is_submittable()` also checks if the verification was done correctly.
 
-#### `get_verified_fields()`: list (see Constants)
+#### `get_verified_fields()`: list (see [Constants](#constants))
 
 Returns an array with all verified field keys.
 
-#### `get_verified_field(key)`: string (see Constants)
+#### `get_verified_field(key)`: string (see [Constants](#constants))
 
 Returns the verification status of one field.
 
