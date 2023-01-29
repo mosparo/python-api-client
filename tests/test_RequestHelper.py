@@ -20,7 +20,8 @@ def test_prepare_form_data():
             'number': 123
         },
         'email[]': [
-            'test@example.com'
+            'test@example.com',
+            'test2@example.com'
         ],
         'data': {}
     }
@@ -32,7 +33,8 @@ def test_prepare_form_data():
         },
         'name': '153590093b8c278bb7e1fef026d8a59b9ba02701d1e0a66beac0938476f2a812',
         'email': [
-            '973dfe463ec85785f5f95af5ba3906eedb2d931c24e69824a89ea65dba4e813b'
+            '973dfe463ec85785f5f95af5ba3906eedb2d931c24e69824a89ea65dba4e813b',
+            '8cc62c145cd0c6dc444168eaeb1b61b351f9b1809a579cc9b4c9e9d7213a39ee'
         ],
         'data': {}
     }
@@ -52,7 +54,8 @@ def test_cleanup_form_data():
         },
         'valid': False,
         'email[]': [
-            'test@example.com'
+            'test@example.com',
+            'test2@example.com'
         ],
         'data': {}
     }
@@ -64,7 +67,8 @@ def test_cleanup_form_data():
         },
         'data': {},
         'email': [
-            'test@example.com'
+            'test@example.com',
+            'test2@example.com'
         ],
         'name': 'Test Tester',
         'valid': False
@@ -85,7 +89,7 @@ def test_to_json():
         'data': {}
     }
 
-    targetJson = '{"name": "Test Tester", "address": {"street": "Teststreet", "number": 123}, "valid": false, "data": {}}'
+    targetJson = '{"name":"Test Tester","address":{"street":"Teststreet","number":123},"valid":false,"data":{}}'
 
     assert targetJson == reqHelp.to_json(data)
 
@@ -102,4 +106,4 @@ def test_create_form_data_hmac_hash():
         'data': {}
     }
 
-    assert 'dc771bf71b2969407d6478821c9701f53699c0009962fe45b9963557b6dc7324' == reqHelp.create_form_data_hmac_hash(data)
+    assert '408f7cfd222dcf2369c8c1655df2f8de489858e23d9e100233a5b09e748fd360' == reqHelp.create_form_data_hmac_hash(data)

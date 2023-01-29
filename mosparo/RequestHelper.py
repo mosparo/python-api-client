@@ -40,18 +40,18 @@ class RequestHelper:
 
         is_list = False
         data = {}
-        if type(form_data) == dict:
-            form_data = form_data.items()
-        elif type(form_data) == list:
+        if type(form_data) == list:
             form_data = enumerate(form_data)
             data = []
             is_list = True
+        else:
+            form_data = form_data.items()
 
         for key, val in form_data:
             if type(val) == dict or type(val) == list:
                 data[key] = self.prepare_form_data(val)
             else:
-                if type(val) == int or type(val) == float:
+                if type(val) == int or type(val) == float or type(val) == bool:
                     val = str(val)
 
                 hash_obj = hashlib.sha256()
@@ -84,12 +84,12 @@ class RequestHelper:
 
         is_list = False
         cleaned_data = {}
-        if type(form_data) == dict:
-            form_data = form_data.items()
-        elif type(form_data) == list:
+        if type(form_data) == list:
             form_data = enumerate(form_data)
             cleaned_data = []
             is_list = True
+        else:
+            form_data = form_data.items()
 
         for key, val in form_data:
             if type(key) == str and '[]' in key:
@@ -129,6 +129,6 @@ class RequestHelper:
         :return: The JSON string for the given form data
         :rtype: str
         """
-        json_string = json.dumps(form_data)
+        json_string = json.dumps(form_data, separators=(',', ':'))
 
         return json_string.replace('[]', '{}')
