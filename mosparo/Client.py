@@ -69,6 +69,7 @@ class Client:
             'auth': (self.public_key, request_signature),
             'headers': {
                 'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
             'data': request_data
         }
@@ -123,7 +124,7 @@ class Client:
         data = {
             'auth': (self.public_key, request_signature),
             'headers': {
-                'Accept': 'application/json',
+                'Accept': 'application/json'
             },
             'data': query_data
         }
