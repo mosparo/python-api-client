@@ -13,13 +13,27 @@
 -----
 
 ## Description
-With this Python library you can connect to a mosparo installation and verify the submitted data.
+This Python library lets you connect to a mosparo installation and verify the submitted data.
 
 ## Installation
+
+### Install using pip
+
 Install this library by using pip:
 
 ```text
 pip install mosparo
+```
+
+### Build from source
+
+1. Build the package
+```commandline
+python setup.py bdist_wheel 
+```
+2. Install the package
+```commandline
+pip install dist/mosparo-1.0.0-py3-none-any.whl
 ```
 
 ## Usage
@@ -40,7 +54,7 @@ pip install mosparo
 ```text
 pip install mosparo
 ```
-4. After the form was submitted, verify the data before processing it
+4. After the form is submitted, verify the data before processing it
 ```python
 from mosparo import Client
 
@@ -75,12 +89,12 @@ from mosparo import Client
 api_client = Client(host, public_key, private_key, verify_ssl)
 ```
 
-| Parameter   | Type | Description                                                  |
-|-------------|------|--------------------------------------------------------------|
-| host        | str  | The host of the mosparo installation                         |
-| public_key  | str  | The public key of the mosparo project                        |
-| private_key | str  | The private key of the mosparo project                       |
-| verify_ssl  | bool | Set to False, if the SSL certificate should not be verified. |
+| Parameter   | Type | Description                                                 |
+|-------------|------|-------------------------------------------------------------|
+| host        | str  | The host of the mosparo installation                        |
+| public_key  | str  | The public key of the mosparo project                       |
+| private_key | str  | The private key of the mosparo project                      |
+| verify_ssl  | bool | Set to False if the SSL certificate should not be verified. |
 
 #### Verify form data
 
@@ -106,13 +120,13 @@ result = api_client.verify_submission(form_data, mosparo_submit_token, mosparo_v
 
 #### `is_submittable()`: bool
 
-Returns True, if the form is submittable. This means that the verification was successful and the 
+Returns `True` if the form is submittable. This means that the verification was successful and the 
 form data are valid.
 
 #### `is_valid()`: bool
 
-Returns True, if mosparo determined the form as valid. The difference to `is_submittable()` is, that this
-is the original result from mosparo while `is_submittable()` also checks if the verification was done correctly.
+Returns `True` if mosparo determined the form as valid. The difference to `is_submittable()` is, that this
+is the original result from mosparo, while `is_submittable()` also checks if the verification was done correctly.
 
 #### `get_verified_fields()`: list (see Constants)
 
@@ -124,7 +138,7 @@ Returns the verification status of one field.
 
 #### `has_issues()`: bool
 
-Returns True, if there were verification issues.
+Returns `True` if there were verification issues.
 
 #### `get_issues()`: list
 
@@ -132,7 +146,7 @@ Returns an array with all verification issues.
 
 #### Get the statistic data by date
 
-To get the statistic data, grouped by date, call `get_statistic_by_date`. The method accepts a time range in second for which the data should be returned (last x seconds). The method will return a `StatisticResult` object.
+To get the statistic data grouped by date, call `get_statistic_by_date`. The method accepts a time range in seconds for which the data should be returned (last x seconds). The method will return a `StatisticResult` object.
 
 ```python
 result = api_client.get_statistic_by_date(range)
