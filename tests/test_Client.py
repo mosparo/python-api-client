@@ -1,6 +1,5 @@
 import json
 import pytest
-import requests
 from mosparo import Client, RequestHelper, VerificationResult, StatisticResult, MosparoException
 
 def test_verify_submission_without_tokens():
