@@ -1,6 +1,6 @@
 import json
 import pytest
-from mosparo import Client, RequestHelper, VerificationResult, StatisticResult, MosparoException
+from mosparo_api_client import Client, RequestHelper, VerificationResult, StatisticResult, MosparoException
 
 def test_verify_submission_without_tokens():
     api_client = Client('http://test.local', 'testPublicKey', 'testPrivateKey')

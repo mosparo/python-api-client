@@ -1,4 +1,4 @@
-from mosparo import VerificationResult
+from mosparo_api_client import VerificationResult
 
 def test_verification_result():
     verified_fields = {

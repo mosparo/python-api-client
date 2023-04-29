@@ -1,4 +1,4 @@
-from mosparo import RequestHelper
+from mosparo_api_client import RequestHelper
 
 publicKey = 'publicKey'
 privateKey = 'privateKey'

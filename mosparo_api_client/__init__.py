@@ -1,4 +1,4 @@
-__project__ = 'mosparo.client'
+__project__ = 'mosparo_api_client'
 __version__ = "1.0.0"
 
 from .Client import *

@@ -1,4 +1,4 @@
-from mosparo import StatisticResult
+from mosparo_api_client import StatisticResult
 
 def test_statistic_result():
     byDate = {
