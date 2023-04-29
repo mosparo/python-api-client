@@ -22,18 +22,21 @@ This Python library lets you connect to a mosparo installation and verify the su
 Install this library by using pip:
 
 ```text
-pip install mosparo
+pip install mosparo-api-client
 ```
 
 ### Build from source
 
-1. Build the package
+You need the module `build` to build the module from source.
+
+1. Clone the repository
+2. Build the package
 ```commandline
-python setup.py bdist_wheel 
+python -m build
 ```
-2. Install the package
+3. Install the package
 ```commandline
-pip install dist/mosparo-1.0.0-py3-none-any.whl
+pip install dist/mosparo_api_client-1.0.0-py3-none-any.whl
 ```
 
 ## Usage
@@ -52,15 +55,16 @@ pip install dist/mosparo-1.0.0-py3-none-any.whl
 ```
 3. Include the library in your project
 ```text
-pip install mosparo
+pip install mosparo-api-client
 ```
 4. After the form is submitted, verify the data before processing it
+
 ```python
-from mosparo import Client
+from mosparo_api_client import Client
 
 api_client = Client(host, public_key, private_key)
 
-your_post_data = {} # This needs to be filled with the post data
+your_post_data = {}  # This needs to be filled with the post data
 
 mosparo_submit_token = your_post_data['_mosparo_submitToken']
 mosparo_validation_token = your_post_data['_mosparo_validationToken']
@@ -84,7 +88,7 @@ else:
 Create a new client object to use the API client.
 
 ```python
-from mosparo import Client
+from mosparo_api_client import Client
 
 api_client = Client(host, public_key, private_key, verify_ssl)
 ```
