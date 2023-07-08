@@ -4,12 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mosparo_api_client"
-version = "1.0.0"
+version = "1.0.1"
 description = "Python API Client to communicate with mosparo."
 readme = "README.md"
 authors = [{ name = "mosparo Core Developers", email = "info@mosparo.io" }]
 license = { file = "LICENSE" }
 classifiers = [
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
@@ -25,7 +26,7 @@ classifiers = [
 ]
 keywords = ["mosparo", "api-client", "spam-protection", "accessibility", "captcha"]
 dependencies = [
-    "requests"
+    "requests>=2.31.0"
 ]
 requires-python = ">=3.5"
 
