@@ -1,5 +1,6 @@
 import json
 import requests
+from datetime import date
 
 from .RequestHelper import RequestHelper
 from .VerificationResult import VerificationResult
@@ -103,11 +104,12 @@ class Client:
             issues
         )
 
-    def get_statistic_by_date(self, range: int = 0) -> StatisticResult:
+    def get_statistic_by_date(self, range: int = 0, start_date: date = None) -> StatisticResult:
         """
         Returns the statistic data, grouped by date.
 
-        :param int range: The time range in seconds for which the data should be returned (in example: 3600)
+        :param int range: Time range in seconds (will be rounded up to a full day since mosparo v1.1)
+        :param datetime.date start_date: The start date from which the statistics are to be returned (requires mosparo v1.1)
         :return: A StatisticResult object
         :rtype: StatisticResult
         :raises MosparoException: if an error occurred or was returned from mosparo
@@ -118,6 +120,9 @@ class Client:
         query_data = {}
         if range > 0:
             query_data['range'] = range
+
+        if start_date is not None:
+            query_data['startDate'] = start_date.strftime('%Y-%m-%d')
 
         request_signature = request_helper.create_hmac_hash(api_endpoint + request_helper.to_json(query_data))
 

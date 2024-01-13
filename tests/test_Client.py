@@ -1,4 +1,6 @@
 import json
+from datetime import date
+
 import pytest
 from mosparo_api_client import Client, RequestHelper, VerificationResult, StatisticResult, MosparoException
 
@@ -189,6 +191,39 @@ def test_get_statistic_by_date_with_range(requests_mock):
     assert type(result) == StatisticResult
     assert requests_mock.call_count == 1
     assert requests_mock.last_request.qs == {'range': ['3600']}
+
+    assert result.get_number_of_valid_submissions() == 2
+    assert result.get_number_of_spam_submissions() == 5
+    assert numbers_by_date == result.get_numbers_by_date()
+
+def test_get_statistic_by_date_with_start_date(requests_mock):
+    public_key = 'testPublicKey'
+    private_key = 'testPrivateKey'
+    numbers_by_date = {
+        '2021-04-29': {
+            'numberOfValidSubmissions': 2,
+            'numberOfSpamSubmissions': 5
+        }
+    }
+
+    requests_mock.get('http://test.local/api/v1/statistic/by-date', json={
+        'result': True,
+        'data': {
+            'numberOfValidSubmissions': 2,
+            'numberOfSpamSubmissions': 5,
+            'numbersByDate': numbers_by_date
+        }
+    }, status_code=200)
+
+    api_client = Client('http://test.local', public_key, private_key)
+
+    start_date = date.fromisoformat('2024-01-01')
+    result = api_client.get_statistic_by_date(0, start_date)
+
+    print(requests_mock.last_request.qs)
+    assert type(result) == StatisticResult
+    assert requests_mock.call_count == 1
+    assert requests_mock.last_request.qs == {'startdate': ['2024-01-01']} # Test this with lowercase characters only because of https://requests-mock.readthedocs.io/en/latest/knownissues.html#case-insensitivity
 
     assert result.get_number_of_valid_submissions() == 2
     assert result.get_number_of_spam_submissions() == 5

@@ -150,15 +150,16 @@ Returns an array with all verification issues.
 
 #### Get the statistic data by date
 
-To get the statistic data grouped by date, call `get_statistic_by_date`. The method accepts a time range in seconds for which the data should be returned (last x seconds). The method will return a `StatisticResult` object.
+To get the statistic data grouped by date, call `get_statistic_by_date`. The method accepts a time range in seconds for which the data should be returned (last x seconds) or the start date from which the data should be returned. The method will return a `StatisticResult` object.
 
 ```python
-result = api_client.get_statistic_by_date(range)
+result = api_client.get_statistic_by_date(range, startDate)
 ```
 
-| Parameter | Type | Description                                                                           |
-|-----------|------|---------------------------------------------------------------------------------------|
-| range     | int  | The time range in seconds for which the statistic should be returned (last X seconds) |
+| Parameter | Type          | Description                                                                         |
+|-----------|---------------|-------------------------------------------------------------------------------------|
+| range     | int           | Time range in seconds (will be rounded up to a full day since mosparo v1.1)         |
+| startDate | datetime.date | The start date from which the statistics are to be returned (requires mosparo v1.1) |
 
 ### StatisticResult
 
