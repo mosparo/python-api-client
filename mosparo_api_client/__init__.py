@@ -1,5 +1,5 @@
 __project__ = 'mosparo_api_client'
-__version__ = "1.1.1"
+__version__ = "1.1.2"
 
 from .Client import *
 from .MosparoException import *
