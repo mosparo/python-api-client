@@ -81,7 +81,7 @@ class Client:
         is_valid = False
 
         verified_fields = {}
-        if 'verifiedFields' in res:
+        if 'verifiedFields' in res and res['verifiedFields']:
             verified_fields = res['verifiedFields']
 
         issues = []
