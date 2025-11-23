@@ -4,13 +4,13 @@
 #
 #    pip-compile pyproject.toml
 #
-certifi==2024.7.4
+certifi>=2024.7.4
     # via requests
-charset-normalizer==3.1.0
+charset-normalizer>=3.1.0
     # via requests
-idna==3.7
+idna>=2.5,<4
     # via requests
-requests==2.32.2
+requests==2.32.5
     # via mosparo-api-client (pyproject.toml)
-urllib3==2.2.2
+urllib3>=2.5.0,<3
     # via requests

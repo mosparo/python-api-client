@@ -8,11 +8,11 @@ version = "1.1.2"
 description = "Python API Client to communicate with mosparo."
 readme = "README.md"
 authors = [{ name = "mosparo Core Developers", email = "info@mosparo.io" }]
-license = { file = "LICENSE" }
+license = "MIT"
+license-files = [ "LICENSE" ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
@@ -22,6 +22,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Internet",
 ]
 keywords = ["mosparo", "api-client", "spam-protection", "accessibility", "captcha"]
